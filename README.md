@@ -53,3 +53,31 @@ run to start service from binary of application
 ```bash
 make run-http
 ```
+
+# Database Migration Management
+
+This document provides instructions for managing database migrations using the provided `Makefile`. The `Makefile` includes commands for various migration operations, including applying migrations, rolling them back, and creating new migrations.
+
+## Migration Commands
+
+### Show Help
+
+```bash
+make help
+```
+
+### Migrate Up
+
+Apply all pending migrations to the database.
+
+```bash
+make migrate-up
+```
+
+### Create Migration
+
+```bash
+make migrate-create NAME=<migration_name> [TYPE=sql]
+
+# example : make migrate-create NAME=users TYPE=sql
+```

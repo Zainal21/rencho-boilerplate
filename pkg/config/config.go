@@ -19,6 +19,7 @@ type Env struct {
 	DBDatabase   string `mapstructure:"DB_DATABASE"`
 	DBUsername   string `mapstructure:"DB_USERNAME"`
 	DBPassword   string `mapstructure:"DB_PASSWORD"`
+	DBSSLMode    string `mapstructure:"DB_SSL_MODE"`
 
 	// DBUrl string `mapstructure:"DATABASE_URL"`
 

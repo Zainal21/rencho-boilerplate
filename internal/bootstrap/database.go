@@ -26,12 +26,13 @@ func NewPostgresDB(env *config.Env) *sqlx.DB {
 
 func FormatDns(env *config.Env) string {
 	return fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s",
+		"postgres://%s:%s@%s:%s/%s?sslmode=%s",
 		env.DBUsername,
 		env.DBPassword,
 		env.DBHost,
 		env.DBPort,
 		env.DBDatabase,
+		env.DBSSLMode,
 	)
 }
 

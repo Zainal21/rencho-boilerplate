@@ -1,6 +1,8 @@
 package http
 
 import (
+	"fmt"
+
 	docs "github.com/Zainal21/renco-boilerplate/docs"
 	"github.com/Zainal21/renco-boilerplate/internal/api/route"
 	"github.com/Zainal21/renco-boilerplate/internal/bootstrap"
@@ -48,5 +50,5 @@ func Start() {
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
-	e.Logger.Fatal(e.Start(env.Port))
+	e.Logger.Fatal(e.Start(fmt.Sprintf("%s:%s", env.Host, env.Port)))
 }
