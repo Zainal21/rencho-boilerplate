@@ -2,9 +2,25 @@ package util
 
 import (
 	"fmt"
+	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 )
+
+const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
+func GenerateRefID(length int) string {
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[rand.Intn(len(charset))]
+	}
+	return string(b)
+}
 
 // ToString converts a value to string.
 func ToString(value interface{}) string {

@@ -1,6 +1,8 @@
 package logger
 
 import (
+	"fmt"
+
 	"github.com/Zainal21/renco-boilerplate/pkg/config"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -41,20 +43,19 @@ func NewLoggerSetup(env *config.Env) LoggerUtils {
 }
 
 func (b *baseLoggerUtils) EchoMiddlewareFunc() func(c echo.Context, values middleware.RequestLoggerValues) error {
+	SetJSONFormatter()
 	return func(c echo.Context, values middleware.RequestLoggerValues) error {
-		logData := b.logger.WithFields(logrus.Fields{
-			"URI":    values.URI,
-			"method": values.Method,
-			"status": values.Status,
-		})
+		logMessage := fmt.Sprintf("URI: %s, Method: %s, Status: %d", values.URI, values.Method, values.Status)
+
 		if values.Status >= 300 {
-			logData.Errorf("failed request with status %d", values.Status)
+			Error(fmt.Sprintf("failed request: %s", logMessage))
 		} else {
-			logData.Infof("success request with status %d", values.Status)
+			Info(fmt.Sprintf("success request: %s", logMessage))
 		}
 
 		return nil
 	}
+
 }
 
 func (b *baseLoggerUtils) Fatalf(format string, args ...interface{}) {

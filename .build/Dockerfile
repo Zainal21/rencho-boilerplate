@@ -1,6 +1,6 @@
 FROM golang:1.23 AS builder
 
-ARG PROJECT_NAME
+ARG BINARY_NAME
 
 WORKDIR /build
 

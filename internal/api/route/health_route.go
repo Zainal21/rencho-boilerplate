@@ -8,10 +8,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func NewHealthRoute(env *config.Env, loggerUtil logger.LoggerUtils, rootGroup *echo.Group, validate *validator.Validate) {
+func NewHealthRoute(env *config.Env, loggerUtil logger.LoggerUtils, rootPathGroup *echo.Group, validate *validator.Validate) {
 	ct := controller.NewHealthController(env, loggerUtil, validate)
 
-	publicGroup := rootGroup.Group("/v1")
-
-	publicGroup.GET("/ping", ct.Ping)
+	rootPathGroup.GET("/up", ct.Ping)
 }

@@ -81,3 +81,25 @@ make migrate-create NAME=<migration_name> [TYPE=sql]
 
 # example : make migrate-create NAME=users TYPE=sql
 ```
+
+## Health Check Endpoint
+
+### Go to Endpoint
+
+```bash
+{base_url}/up
+```
+
+Expected Response:
+
+```json
+{
+  "ref_id": "z0LMVDmRkV",
+  "code": 200,
+  "status": "OK",
+  "data": {
+    "message": "Waras!"
+  },
+  "timestamp": "2024-09-19T15:31:20.009226+07:00"
+}
+```

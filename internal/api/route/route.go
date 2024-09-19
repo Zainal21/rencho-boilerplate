@@ -21,8 +21,10 @@ func Setup(env *config.Env, loggerUtil logger.LoggerUtils, db *sqlx.DB, firebase
 	authMiddleware := middleware.NewAuthMiddleware(userUsecase, authUtil)
 	validate := validator.New()
 
-	rootGroup := e.Group("/api")
+	// route group define
+	rootPathGroup := e.Group("")
+	rootApiGroup := e.Group("/api")
 
-	NewHealthRoute(env, loggerUtil, rootGroup, validate)
-	NewAuthRouter(env, loggerUtil, rootGroup, authUsecase, authMiddleware, validate)
+	NewHealthRoute(env, loggerUtil, rootPathGroup, validate)
+	NewAuthRouter(env, loggerUtil, rootApiGroup, authUsecase, authMiddleware, validate)
 }
