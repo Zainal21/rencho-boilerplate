@@ -17,6 +17,8 @@ func App() Application {
 	app := &Application{}
 	app.Env = utils.LoadConfig(".env")
 	app.DB = NewPostgresDB(app.Env)
+	RegistryLogger(app.Env)
+
 	// app.FirebaseAuth = NewFirebaseAuth(app.Env)
 	return *app
 }

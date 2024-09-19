@@ -12,8 +12,7 @@ There is some dependencies that we used in this skeleton:
 - [Viper](https://github.com/spf13/viper) [Go Configuration]
 - [Cobra](https://github.com/spf13/cobra) [Go Modern CLI]
 - [Logrus Logger](https://github.com/sirupsen/logrus) [Go Logger]
-- [Goose Migration](https://github.com/pressly/goose) [Go Migration] - Upcoming
-- [Gobreaker](https://github.com/sony/gobreaker) [Go Circuit Breaker] - Upcoming
+- [Goose Migration](https://github.com/pressly/goose) [Go Migration]
 - [OpenTelemetry](https://pkg.go.dev/go.opentelemetry.io/otel) [OpenTelemetry Tracer] - Upcoming
 
 ## Requirement
