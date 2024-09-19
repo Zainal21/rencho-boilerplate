@@ -2,8 +2,8 @@ package config
 
 type Env struct {
 	AppEnv string `mapstructure:"APP_ENV"`
-	Host   string `mapstructure:"HOST"`
-	Port   string `mapstructure:"PORT"`
+	Host   string `mapstructure:"APP_HOST"`
+	Port   string `mapstructure:"APP_PORT"`
 	// firebase
 	FirebaseCredentialPath    string `mapstructure:"FIREBASE_CREDENTIAL_PATH"`
 	FirebaseVerifyPasswordURL string `mapstructure:"FIREBASE_VERIFY_PASSWORD_URL"`
