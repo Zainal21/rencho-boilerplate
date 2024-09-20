@@ -1,16 +1,20 @@
 package http
 
 import (
+	"errors"
 	"fmt"
+	"time"
 
 	docs "github.com/Zainal21/renco-boilerplate/docs"
 	"github.com/Zainal21/renco-boilerplate/internal/api/route"
 	"github.com/Zainal21/renco-boilerplate/internal/bootstrap"
 	"github.com/Zainal21/renco-boilerplate/pkg/logger"
+	"github.com/Zainal21/renco-boilerplate/pkg/response"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
+	"golang.org/x/time/rate"
 )
 
 //	@title			Renco Boilerplate
@@ -45,6 +49,40 @@ func Start() {
 		LogStatus:     true,
 		LogValuesFunc: loggerUtil.EchoMiddlewareFunc(),
 	}))
+
+	// config cors
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		MaxAge: 300,
+		AllowOrigins: []string{
+			"http://*",
+			"https://*",
+		},
+		AllowHeaders: []string{
+			echo.HeaderOrigin,
+			echo.HeaderContentType,
+			echo.HeaderAccept,
+		},
+	}))
+
+	// config rate limiter
+	config := middleware.RateLimiterConfig{
+		Skipper: middleware.DefaultSkipper,
+		Store: middleware.NewRateLimiterMemoryStoreWithConfig(
+			middleware.RateLimiterMemoryStoreConfig{Rate: rate.Limit(1), Burst: 30, ExpiresIn: 3 * time.Minute},
+		),
+		IdentifierExtractor: func(ctx echo.Context) (string, error) {
+			id := ctx.RealIP()
+			return id, nil
+		},
+		ErrorHandler: func(context echo.Context, err error) error {
+			return response.FromForbiddenError(errors.New("error while extracting identifier")).WithEcho(context)
+		},
+		DenyHandler: func(context echo.Context, identifier string, err error) error {
+			return response.FromForbiddenError(errors.New("to Many Request")).WithEcho(context)
+		},
+	}
+
+	e.Use(middleware.RateLimiterWithConfig(config))
 
 	route.Setup(env, loggerUtil, db, firebaseAuth, e)
 

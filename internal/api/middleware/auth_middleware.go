@@ -10,14 +10,14 @@ import (
 )
 
 type baseAuthMiddleware struct {
-	userUsecase domain.UserUsecase
-	authUtil    domain.JwtAuthUseCase
+	userUsecase    domain.UserUsecase
+	jwtAuthUseCase domain.JwtAuthUseCase
 }
 
-func NewAuthMiddleware(userUsecase domain.UserUsecase, authUtil domain.JwtAuthUseCase) AuthMiddleware {
+func NewAuthMiddleware(userUsecase domain.UserUsecase, jwtAuthUseCase domain.JwtAuthUseCase) AuthMiddleware {
 	return &baseAuthMiddleware{
-		userUsecase: userUsecase,
-		authUtil:    authUtil,
+		userUsecase:    userUsecase,
+		jwtAuthUseCase: jwtAuthUseCase,
 	}
 }
 
@@ -30,7 +30,7 @@ func (b *baseAuthMiddleware) ValidateUser() echo.MiddlewareFunc {
 			}
 
 			token := strings.Split(bearerToken, " ")[1]
-			firebaseUID, err := b.authUtil.VerifyToken(token)
+			firebaseUID, err := b.jwtAuthUseCase.VerifyToken(token)
 			if err != nil {
 				return response.FromForbiddenError(err).WithEcho(c)
 			}
