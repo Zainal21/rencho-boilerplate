@@ -2,7 +2,6 @@ package bootstrap
 
 import (
 	"firebase.google.com/go/v4/auth"
-	"github.com/Zainal21/renco-boilerplate/internal/utils"
 	"github.com/Zainal21/renco-boilerplate/pkg/config"
 	"github.com/jmoiron/sqlx"
 )
@@ -15,7 +14,7 @@ type Application struct {
 
 func App() Application {
 	app := &Application{}
-	app.Env = utils.LoadConfig(".env")
+	app.Env = config.LoadConfig()
 	app.DB = NewPostgresDB(app.Env)
 	RegistryLogger(app.Env)
 

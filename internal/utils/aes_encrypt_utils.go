@@ -42,10 +42,7 @@ func (b *baseAesEncrypt) Encrypt(plaintext string) (string, error) {
 		return "", err
 	}
 
-	byt, err := gcm.Seal(nonce, nonce, []byte(plaintext), nil), nil
-	if err != nil {
-		return "", err
-	}
+	byt := gcm.Seal(nonce, nonce, []byte(plaintext), nil)
 
 	return hex.EncodeToString(byt), nil
 }

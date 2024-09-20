@@ -29,8 +29,8 @@ const (
 )
 
 const (
-	logrusStackJump          = 4
-	logrusFieldlessStackJump = 6
+	// logrusStackJump          = 4
+	// logrusFieldlessStackJump = 6
 
 	maximumCallerDepth int = 25
 	knownLogrusFrames  int = 4
@@ -90,7 +90,7 @@ func (f *Formatter) Format(entry *logrus.Entry) ([]byte, error) {
 	return f.ChildFormatter.Format(entry)
 }
 
-func (f *Formatter) getCurrentPosition(entry *logrus.Entry) (string, string, string) {
+func (f *Formatter) getCurrentPosition(_ *logrus.Entry) (string, string, string) {
 
 	fr := getCaller()
 

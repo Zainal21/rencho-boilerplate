@@ -1,11 +1,11 @@
 package migration
 
 import (
-	"github.com/Zainal21/renco-boilerplate/internal/utils"
+	"github.com/Zainal21/renco-boilerplate/pkg/config"
 	"github.com/Zainal21/renco-boilerplate/pkg/database/postgres"
 )
 
 func MigrateDatabase() {
-	cfg := utils.LoadConfig(".env")
+	cfg := config.LoadConfig()
 	postgres.DatabaseMigration(cfg)
 }
