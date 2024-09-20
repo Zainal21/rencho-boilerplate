@@ -8,15 +8,16 @@ services:
         BINARY_NAME: "${APP_NAME:-renco}"
     ports:
       - "${PORT:-3001}:3001"
-    command: ["./renco", "http"]
+    command: ["./${APP_NAME:-renco}", "http"]
     env_file:
       - .env
     networks:
       - renco-postgresql
+    restart: on-failure
     depends_on:
-      - postgres
+      - db_postgres
 
-  postgres:
+  db_postgres:
     container_name: postgres_db
     image: postgres
     environment:
@@ -24,6 +25,8 @@ services:
       POSTGRES_PASSWORD: developer
       POSTGRES_DB: renco-db-test
       PGDATA: /data/postgres
+    ports:
+      - "5433:5432"
     volumes:
       - postgres:/data/postgres
     networks:
