@@ -14,6 +14,5 @@ FROM scratch
 COPY --from=builder /build/renco /
 COPY --from=builder /build/config /config
 COPY --from=builder /build/database /database
-COPY --from=builder /build/.env .env
 
 EXPOSE 3001
