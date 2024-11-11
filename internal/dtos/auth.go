@@ -1,12 +1,11 @@
 package dtos
 
-type AuthControllerPayloadSignUp struct {
+type SignUpDto struct {
 	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required,min=8"`
-	IsAdmin  bool   `json:"is_admin" validate:"required"`
 }
 
-type AuthControllerPayloadGetAccessToken struct {
+type GetAccessTokenDto struct {
 	Email    string `json:"email"  validate:"required,email"`
 	Password string `json:"password"  validate:"required,min=8"`
 }

@@ -25,7 +25,7 @@ func NewAuthUsecase(env *config.Env, userRepository repositories.UserRepository,
 	}
 }
 
-func (b *baseAuthUsecase) SignUp(ctx context.Context, email, password string, isAdmin bool) error {
+func (b *baseAuthUsecase) SignUp(ctx context.Context, email, password string) error {
 	user, err := b.userRepository.GetUserByEmail(email)
 	if user != nil {
 		return errors.New("user already exist")

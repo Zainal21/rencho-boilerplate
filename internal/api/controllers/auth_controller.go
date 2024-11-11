@@ -34,13 +34,13 @@ func NewAuthController(env *config.Env, loggerUtil logger.LoggerUtils, authUseca
 //	@Tags		auth
 //	@Accept		json
 //	@Produce	json
-//	@Param		credential body	domain.AuthControllerPayloadSignUp true	"email and password"
+//	@Param		credential body	dtos.SignUpDto true	"email and password"
 //	@Success	201
 //	@Failure	400	"validation error | user already exist"
 //	@Failure	500	"Internal Server Error"
 //	@Router		/auth/signup [post]
 func (b *baseAuthController) SignUp(c echo.Context) error {
-	var payload dtos.AuthControllerPayloadSignUp
+	var payload dtos.SignUpDto
 	err := c.Bind(&payload)
 	if err != nil {
 		return response.FromBindingError(err).WithEcho(c)
@@ -53,7 +53,7 @@ func (b *baseAuthController) SignUp(c echo.Context) error {
 		}
 	}
 
-	err = b.authUsecase.SignUp(c.Request().Context(), payload.Email, payload.Password, payload.IsAdmin)
+	err = b.authUsecase.SignUp(c.Request().Context(), payload.Email, payload.Password)
 	if err != nil {
 		if err.Error() == "user already exist" {
 			return response.FromBadRequestError(err).WithEcho(c)
@@ -71,14 +71,14 @@ func (b *baseAuthController) SignUp(c echo.Context) error {
 //	@Tags		auth
 //	@Accept		json
 //	@Produce	json
-//	@Param		credential body domain.AuthControllerPayloadGetAccessToken	true "email and password"
+//	@Param		credential body dtos.GetAccessTokenDto	true "email and password"
 //	@Success	200
 //	@Failure	400	"validation error"
 //	@Failure	404	"user not found"
 //	@Failure	500	"Internal Server Error"
 //	@Router		/auth/access-token [post]
 func (b *baseAuthController) GetAccessToken(c echo.Context) error {
-	var payload dtos.AuthControllerPayloadGetAccessToken
+	var payload dtos.GetAccessTokenDto
 	err := c.Bind(&payload)
 	if err != nil {
 		return response.FromBindingError(err).WithEcho(c)

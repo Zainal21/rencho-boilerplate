@@ -10,6 +10,6 @@ import (
 
 // Usecase
 type AuthUsecase interface {
-	SignUp(ctx context.Context, email, password string, isAdmin bool) error
+	SignUp(ctx context.Context, email, password string) error
 	GetAccessToken(ctx context.Context, email, password string) (string, error)
 }
